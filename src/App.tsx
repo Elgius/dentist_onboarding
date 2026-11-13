@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { Illustration, ToothMark } from './components/Illustration'
 import { StoryVisual } from './components/StoryVisual'
+import { PrintedStory } from './components/PrintedStory'
 import { preparationTips, storySteps } from './story'
 import './App.css'
 
@@ -44,8 +45,13 @@ function App() {
     document.title = `${page === 'story' ? step.label : page === 'parents' ? 'For parents & carers' : page === 'steps' ? 'All the steps' : 'Welcome'} · My first dental visit`
   }, [page, step.label])
 
-  const print = (view: PrintView) => {
+  const print = async (view: PrintView) => {
     flushSync(() => setPrintView(view))
+    // Wait for the printed story's photos and font before opening the dialog.
+    await Promise.allSettled([
+      document.fonts.ready,
+      ...Array.from(document.querySelectorAll<HTMLImageElement>('.print-content img'), image => image.decode()),
+    ])
     window.print()
   }
 
@@ -103,7 +109,7 @@ function App() {
       <footer className="site-footer"><p>{page === 'parents' ? 'Every child and appointment is different. Confirm arrangements with your clinic.' : 'Every visit can be different. Your dental team can explain your plan.'}</p>{page === 'parents' ? <a href="#steps">← Back to my visit story</a> : <p>Read together. Explore at your pace.</p>}</footer>
     </div>
     <div className="print-content">
-      {printView === 'preparation' ? <section className="print-sheet"><p className="eyebrow">My first dental visit</p><h1>What helps my child?</h1><p>Fill this in together and bring it to your appointment.</p>{sheetPrompts.map(prompt => <div className="writing-prompt" key={prompt}><h2>{prompt}</h2><div /></div>)}<p className="small-note">Agree any pause signal and support arrangements with your dental team.</p></section> : <><h1>My first dental visit</h1><p>Read together. Explore at your own pace. Every visit can be different.</p>{storySteps.map((item, i) => <article className="printed-step" key={item.label}><p className="eyebrow">Step {i + 1} of 8 · {item.label}</p><h2>{item.title}</h2><StoryVisual scene={item.scene} />{item.paragraphs.map(p => <p key={p}>{p}</p>)}<p className="print-sensory"><strong>What might I hear or see?</strong> {item.sensory}</p></article>)}</>}
+      {printView === 'preparation' ? <section className="print-sheet"><p className="eyebrow">My first dental visit</p><h1>What helps my child?</h1><p>Fill this in together and bring it to your appointment.</p>{sheetPrompts.map(prompt => <div className="writing-prompt" key={prompt}><h2>{prompt}</h2><div /></div>)}<p className="small-note">Agree any pause signal and support arrangements with your dental team.</p></section> : <PrintedStory />}
     </div>
   </>
 }

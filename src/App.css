@@ -214,19 +214,57 @@ figcaption { text-align: center; font-size: 14px; line-height: 22px; color: var(
   .car--sage, .motion-toggle { display: none; }
 }
 @media print {
-  @page { margin: 18mm; }
+  @page { size: A4 portrait; margin: 14mm; }
   body { background: white; color: #233c38; }
   .site-shell { display: none; }
   .print-content { display: block; font-size: 14pt; line-height: 1.6; }
-  .print-content h1 { font-size: 30pt; margin-bottom: 12pt; }
-  .printed-step { break-before: page; break-inside: avoid; }
-  .printed-step h2 { font-size: 26pt; margin: 12pt 0; }
-  .printed-step .illustration { height: 240px; margin: 16pt 0; print-color-adjust: exact; }
+  .printed-story { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .print-cover, .printed-step { height: 267mm; display: flex; flex-direction: column; break-inside: avoid; }
+  .printed-step { break-before: page; gap: 5mm; }
+  .print-book-label, .print-step-header { display: flex; align-items: center; gap: 4mm; font-size: 11pt; font-weight: 800; }
+  .print-book-label { justify-content: space-between; border-bottom: 1.5pt solid #426b56; padding-bottom: 4mm; }
+  .print-cover-title { display: flex; align-items: center; justify-content: space-between; margin-top: 8mm; }
+  .print-cover-title > svg { width: 43mm; height: 46mm; transform: rotate(8deg); }
+  .print-kicker { font-size: 15pt; font-weight: 800; color: #426b56; margin-bottom: 2mm; }
+  .print-cover h1 { font-size: 43pt; line-height: 1.05; letter-spacing: -.04em; }
+  .print-cover-intro { font-size: 17pt; line-height: 1.5; margin-top: 5mm; }
+  .print-cover-picture { position: relative; margin-top: 6mm; }
+  .print-cover-picture .illustration { height: 71mm; padding: 2mm; border-radius: 24mm 24mm 7mm 7mm; }
+  .print-cover-picture .scene { flex: none; height: 100%; width: 100%; max-width: none; }
+  .print-cover-picture figcaption { display: none; }
+  .print-cover-sticker { position: absolute; right: 3mm; bottom: 5mm; padding: 5mm; border-radius: 50%; background: #efdc98; border: 1pt solid #bca35f; font-size: 12pt; font-weight: 800; line-height: 1.25; text-align: center; transform: rotate(-9deg); }
+  .print-name { display: flex; align-items: baseline; gap: 3mm; margin: 7mm 0; font-size: 13pt; font-weight: 700; }
+  .print-name span { flex: 1; border-bottom: 1pt dashed #52645e; }
+  .print-journey { padding: 5mm; background: #f0f3ed; border-radius: 5mm; }
+  .print-journey h2 { font-size: 16pt; margin-bottom: 3mm; }
+  .print-journey ol { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 5mm; list-style: none; padding: 0; margin: 0; }
+  .print-journey li { display: flex; gap: 2mm; align-items: center; font-size: 10pt; line-height: 1.25; font-weight: 700; }
+  .print-journey li span { display: inline-flex; justify-content: center; align-items: center; flex: 0 0 6mm; height: 6mm; background: white; border: 1pt solid #a8b8ab; border-radius: 50%; color: #426b56; }
+  .print-cover-note { margin-top: 5mm; font-size: 10pt; line-height: 1.5; color: #52645e; }
+  .print-page-footer { margin-top: auto; padding-top: 3mm; border-top: 1pt solid #d7dfd6; display: flex; justify-content: space-between; font-size: 9pt; line-height: 1.3; color: #52645e; }
+  .print-step-header { color: #426b56; }
+  .print-step-number { display: flex; justify-content: center; align-items: center; width: 12mm; height: 12mm; border-radius: 50%; background: #426b56; color: white; font-size: 21pt; }
+  .print-step-count { margin-left: auto; font-size: 10pt; font-weight: 600; }
+  .printed-step > h2 { font-size: 29pt; line-height: 1.15; letter-spacing: -.025em; max-width: 170mm; min-height: 24mm; display: flex; align-items: center; }
+  .printed-step > .illustration, .print-photo-pair { flex: 0 0 82mm; height: 82mm; margin: 0; border-radius: 6mm; overflow: hidden; }
+  .printed-step .illustration--story { padding: 4mm; }
+  .printed-step .illustration--story .scene { width: 100%; max-width: none; }
+  .printed-step .story-photo-stage { background: #e4ebdd; }
+  .printed-step .story-photo-stage img { object-fit: contain; }
+  .printed-step figcaption { font-size: 9pt; line-height: 1.35; padding: 2mm 4mm; }
   .printed-step .photo-choices { display: none; }
-  .printed-step .story-photo figcaption { font-size: 10pt; padding: 6pt 10pt; }
-  .printed-step p { margin: 10pt 0; }
-  .print-sensory { font-size: 12pt; }
-  .print-sheet h1 { font-size: 28pt; }
+  .print-photo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+  .print-photo-pair .story-photo { height: 82mm; border-radius: 5mm; }
+  .print-story-words { display: flex; flex-direction: column; gap: 3mm; }
+  .print-story-words p { font-size: 17pt; line-height: 1.45; }
+  .print-sensory { display: flex; align-items: flex-start; gap: 3mm; padding: 4mm; border: 1pt solid #d6bf77; background: #fbf3d7; border-radius: 4mm; }
+  .print-sensory-icon { display: flex; align-items: center; justify-content: center; flex: 0 0 7mm; height: 7mm; background: white; border: 1pt solid #bca35f; border-radius: 50%; font-size: 13pt; font-weight: 800; }
+  .print-sensory h3, .print-together h3 { font-size: 12pt; line-height: 1.35; margin: 0 0 1mm; }
+  .print-sensory p { font-size: 11pt; line-height: 1.5; }
+  .print-together { display: flex; align-items: center; gap: 3mm; }
+  .print-together > svg { flex: 0 0 17mm; height: 18mm; }
+  .print-together p { font-size: 11pt; line-height: 1.4; }
+  .print-sheet h1 { font-size: 28pt; margin-bottom: 12pt; }
   .writing-prompt { margin-top: 16pt; break-inside: avoid; }
   .writing-prompt h2 { font-size: 13pt; }
   .writing-prompt > div { height: 44pt; border-bottom: 1px solid #a8b8ab; }

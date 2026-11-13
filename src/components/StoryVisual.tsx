@@ -23,10 +23,14 @@ const photos: Partial<Record<Scene, StoryPhoto[]>> = {
   finish: [{ filename: 'PHOTO-2026-10-21-11-08-30.jpg', label: 'Reception', alt: 'The reception counters and seating inside the Faculty of Dentistry building.', caption: 'Reception, where you can ask about what happens next.', width: 810, height: 1080 }],
 }
 
-export function StoryVisual({ scene }: { scene: Scene }) {
+export function StoryVisual({ scene, printMode = false }: { scene: Scene; printMode?: boolean }) {
   const [selected, setSelected] = useState(0)
   const options = photos[scene]
   if (!options) return <Illustration scene={scene} />
+  if (printMode && options.length > 1) return <div className="print-photo-pair">{options.map(photo => <figure className="illustration story-photo" key={photo.filename}>
+    <div className="story-photo-stage"><img src={`/images/${encodeURIComponent(photo.filename)}`} alt={photo.alt} width={photo.width} height={photo.height} decoding="async" /></div>
+    <figcaption>{photo.caption}</figcaption>
+  </figure>)}</div>
   const photo = options[selected] ?? options[0]
 
   return <figure className="illustration story-photo">
